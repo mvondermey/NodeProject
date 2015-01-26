@@ -59,9 +59,9 @@ fs.readdir(p, function (err, files) {
 		//
 		var req = http.request({
   			method: 'post',
-			host: 'posttestserver.com',
+			host: 'localhost',
 			port : '80',
-			path: '/post.php',
+			path: '/',
 //  			headers: form.getHeaders()
 		},fcallback);
 	    //form.pipe(request);
@@ -83,7 +83,7 @@ fs.readdir(p, function (err, files) {
 	    //
 	    console.log("Streamed");
 		//
-		fs.createReadStream(file).pipe(request.put('http://posttestserver.com/post.php'));
+		//fs.createReadStream(file).pipe(request.put('http://posttestserver.com/post.php'));
 		//
 		console.log("Streamed2");
 		//
