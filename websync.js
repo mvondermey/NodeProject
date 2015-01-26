@@ -5,6 +5,9 @@ var fs = require("fs"),
 FormData = require('form-data');
 var request = require('request');
 //
+http.globalAgent.maxSockets = 100;
+//https.globalAgent.maxSockets = 100;
+
 path = require("path");
 //
 var app = express();
@@ -24,7 +27,8 @@ fs.readdir(p, function (err, files) {
     }).forEach(function (file) {
         console.log("%s (%s) %d", file, path.extname(file),fs.statSync(file).isFile());
         var form = new FormData();
-        form.append('file', fs.createReadStream(file));
+        form.append('my_field', 'my value');
+        //form.append('file', fs.createReadStream(file));
         console.log("File read");
         //
         //form.submit('http:posttestserver.com/post.php', function(err, res) {
@@ -36,7 +40,7 @@ fs.readdir(p, function (err, files) {
         //
 
 //
-		//form.pipe(request);
+	//	form.pipe(request);
 //
 		fcallback = function(response) {
 			//
@@ -56,16 +60,42 @@ fs.readdir(p, function (err, files) {
 		});
 		//
 		};
-		//
+		/*
 		var req = http.request({
   			method: 'post',
 			host: 'localhost',
 			port : '80',
 			path: '/',
-//  			headers: form.getHeaders()
-		},fcallback);
+  			//headers: form.getHeaders()
+		},fcallback);		
+		*/
+		
 	    //form.pipe(request);
 
+		//form.pipe(req);
+
+var req1 = request.post("http://localhost", function (err, resp, body) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('URL: ' + body);
+  }
+});
+//
+fs.createReadStream(file).pipe(req1);
+var form = req1.form();
+/*
+form.append('file', fs.createReadStream(file),{
+  filename: file.name,
+  contentType: file.type
+  });
+*/
+		console.log(form);
+/*
+ */
+
+
+/*
 	    var readStream = fs.createReadStream(file);
 	    //
 	    readStream.on('open',function(){
@@ -83,10 +113,10 @@ fs.readdir(p, function (err, files) {
 	    //
 	    console.log("Streamed");
 		//
-		//fs.createReadStream(file).pipe(request.put('http://posttestserver.com/post.php'));
+		//fs.createReadStream(file).pipe(request.post('http://localhost'));
 		//
 		console.log("Streamed2");
-		//
+		*/
     });
     //
 });

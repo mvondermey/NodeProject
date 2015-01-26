@@ -2,6 +2,9 @@
 var http = require('http');
 express = require('express');
 //
+http.globalAgent.maxSockets = 100;
+//https.globalAgent.maxSockets = 100;
+
 var fs = require("fs"),
 path = require("path");
 //
@@ -12,7 +15,9 @@ app.use(express.bodyParser());
 //
 app.post('/', function(req, res) {
    // print to console
-   console.log(req.body);
+   console.log(req);
+   res.emit('end');
+   //res.write('<html><body><h1>Hello World</h1></body></html>');
 } );
 //
 app.get('/', function (req, res) {
