@@ -7,7 +7,7 @@ var request = require('request');
 //
 http.globalAgent.maxSockets = 100;
 //https.globalAgent.maxSockets = 100;
-
+//
 path = require("path");
 //
 var app = express();
@@ -74,7 +74,11 @@ fs.readdir(p, function (err, files) {
 
 		//form.pipe(req);
 
-var req1 = request.post("http://localhost", function (err, resp, body) {
+var destFilename = "http://localhost/" + path.basename(file);
+
+console.log(destFilename);
+
+var req1 = request.post(destFilename, function (err, resp, body) {
   if (err) {
     console.log(err);
   } else {
@@ -83,14 +87,14 @@ var req1 = request.post("http://localhost", function (err, resp, body) {
 });
 //
 fs.createReadStream(file).pipe(req1);
-var form = req1.form();
+//var form = req1.form();
 /*
 form.append('file', fs.createReadStream(file),{
   filename: file.name,
   contentType: file.type
   });
 */
-		console.log(form);
+	//	console.log(form);
 /*
  */
 
